@@ -4,6 +4,7 @@ import {doctorslotmessage,doctorslottask} from '../Controllers/timeslotControlle
 import Admin from '../models/admin_model.js';
 import isAuthenticated from '../Middleware/isAuthenticated.js';
 
+
 const router=Router();
 
 router.get('/doctorslots',doctorslotmessage);
