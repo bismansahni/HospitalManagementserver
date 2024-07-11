@@ -1,6 +1,6 @@
 import express from 'express';
 import { Router } from 'express';
-import { patientloginmessage,doctorloginmessage,adminloginmessage,patientregister, patientregistermessage,patientlogin,adminlogin , registerdoctor} from '../Controllers/authController.js';
+import { patientloginmessage,doctorloginmessage,adminloginmessage,patientregister, patientregistermessage,patientlogin,adminlogin , registerdoctor,doctorlogin} from '../Controllers/authController.js';
 import isAuthenticated from '../Middleware/isAuthenticated.js';
 import Admin from '../models/admin_model.js';
 
@@ -14,7 +14,7 @@ router.get('/register/patient',patientregistermessage);
 
 
 router.post('/login/patient',patientlogin);
-router.post('/login/doctor',patientlogin);
+router.post('/login/doctor',doctorlogin);
 router.post('/login/admin',adminlogin);
 
 

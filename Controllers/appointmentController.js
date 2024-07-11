@@ -7,7 +7,7 @@ export const createappointmentmessage=async(req,res)=>{
 }
 
 
-export const createappointmenttask = async (req, res) => {
+export const selectdoctor= async (req, res) => {
     const { department } = req.body;
     const validDepartments = ['Cardiology', 'Oncology', 'Neurology', 'Pediatrics', 'Orthopedics'];
     console.log('Received department:', department); 
@@ -42,4 +42,15 @@ const chooseDoctor = async (department) => {
     }
 };
 
+export const makeappointment=async(req,res)=>{
+    const  {doctorname:doctor}=req.body;
+   
+    try{
+        const availabletimings=await Doctor.find(doctorname.timeSlots);
+    }
+    catch(error){
+        res.status(500).json({ error: "Failed to make an appointment " });
+    }
 
+    
+}

@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import connectToMongoDB from './db/config.js'
 import authroute from './routes/authentication.js'
 import appointment from './routes/appointment.js'
+import slots from './routes/timeslot.js'
 import cors from 'cors';
 import multer from 'multer';
 
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/auth',authroute);
 app.use('/appointments',appointment);
+app.use('/slots',slots)
 
 app.get('/',(req,res)=>{
     res.send("We are in the main server at the hospital management")

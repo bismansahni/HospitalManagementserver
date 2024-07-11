@@ -84,9 +84,13 @@ export const adminlogin =async (req,res)=>{
     }
     try{
         const nameofadmin=await Admin.findOne({name:username});
-        if(!username){
+       
+        if(nameofadmin===null){
             return res.status(404).json({message:"No valid admin. Access denied!"});
         }
+        // if(username!=nameofadmin.name){
+        //     return res.status(404).json({message:"No valid admin. Access denied!"});
+        // }
        
         const isMatch=await  bcrypt.compare(password, nameofadmin.password);
         if(!isMatch){
@@ -144,3 +148,32 @@ export const registerdoctor = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+export const doctorlogin=async(req,res) =>{
+    const {email,password}=req.body;
+    
+    
+    if(!email || !password){
+     return    res.status(404).json({message:"Please enter all the required fields"});
+    }
+    try{
+        const doctordetails=await Doctor.findOne({email});
+        if(doctordetails===null){
+          return   res.status(404).json({message:"Your email id is wrong, or the user doesnt exist"});
+        }
+        const isMatch=await  bcrypt.compare(password, doctordetails.password);
+        if(!isMatch){
+            return res.status(400).json({error:'Wrong password'});
+        }
+       
+        const token = jwt.sign({ id: doctordetails._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+      
+        res.status(200).json({ token ,username: doctordetails.name});  
+
+
+    }
+    catch(error){
+        return res.status(500).json({ error: "Some problem in doctor login" });
+    }
+}
