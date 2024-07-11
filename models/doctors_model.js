@@ -1,30 +1,15 @@
 import mongoose from 'mongoose';
-import addPasswordEncryption from '../Middleware/passwordEncryptor.js';
-
 
 const TimeSlotSchema = new mongoose.Schema({
-  date: {
-    type: Date,
+  startTime: {
+    type: String,
     required: true,
   },
-  slots: [
-    {
-      startTime: {
-        type: Date,
-        required: true,
-      },
-      endTime: {
-        type: Date,
-        required: true,
-      },
-      available: {
-        type: Boolean,
-        default: true,
-      },
-    },
-  ],
+  endTime: {
+    type: String,
+    required: true,
+  },
 });
-
 
 const DoctorSchema = new mongoose.Schema({
   name: {
@@ -34,7 +19,7 @@ const DoctorSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true, 
+    unique: true,
   },
   password: {
     type: String,
@@ -44,10 +29,11 @@ const DoctorSchema = new mongoose.Schema({
     type: String,
     enum: ['Cardiology', 'Oncology', 'Neurology', 'Pediatrics', 'Orthopedics'],
   },
-  timeSlots: [TimeSlotSchema],
+  timeSlots: {
+    type: [TimeSlotSchema],
+    default: [],
+  },
 });
-
-addPasswordEncryption(DoctorSchema);
 
 const Doctor = mongoose.model('Doctor', DoctorSchema);
 export default Doctor;
